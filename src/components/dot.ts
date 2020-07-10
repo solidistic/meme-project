@@ -20,8 +20,10 @@ export class Dot {
   radius: number;
   maxRadius: number;
   velocity: number;
+  private createdAt: number;
   lifetime: number;
   color: string;
+  isDead: boolean;
 
   constructor(x: number, y: number, velocity: number, lifetime: number) {
     this.id = Math.floor(Math.random() * 1000);
@@ -33,6 +35,8 @@ export class Dot {
     this.maxRadius = 60;
     this.velocity = velocity;
     this.lifetime = lifetime;
+    this.createdAt = new Date().getSeconds();
+    this.isDead = false;
     this.color = colors[Math.floor(Math.random() * colors.length)];
   }
 
@@ -55,9 +59,11 @@ export class Dot {
   }
 
   draw(p5: p5): void {
-    p5.fill(this.color);
-    p5.noStroke();
-    p5.ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
+    if (!this.isDead) {
+      p5.fill(this.color);
+      p5.noStroke();
+      p5.ellipse(this.x, this.y, this.radius * 2, this.radius * 2);
+    }
   }
 
   update(p5: p5) {
@@ -70,11 +76,13 @@ export class Dot {
     this.x += this.dx;
     this.y += this.dy;
 
+    if (this.createdAt + this.lifetime === p5.second()) this.isDead = true;
+
     this.draw(p5);
   }
 
   increaseRadius(p5: p5): void {
     if (this.radius < 60) this.radius += 1;
+    else this.isDead = true;
   }
-
 }

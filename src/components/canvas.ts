@@ -38,14 +38,13 @@ export const p5canvas = (p5: p5) => {
       const onRange = distance - dots[i].radius < offset;
 
       if (onRange) dots[i].increaseRadius(p5);
-      // if (dots[i].isDead(p5)) dots.splice(i, 1);
-      if (!dots[i].hideDot) dots[i].update(p5);
+      
+      if (dots[i]) dots[i].update(p5);
     }
   };
 
   p5.mousePressed = () => {
     const dot = new Burst(p5.mouseX, p5.mouseY, 5, 5);
     dots.push(dot);
-    console.log("Generated id", dot.dotID);
   };
 };
