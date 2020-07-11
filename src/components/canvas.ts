@@ -36,15 +36,14 @@ export const p5canvas = (p5: p5) => {
 
       if (onRange) dots[i].increaseRadius(p5);
 
-      if (!dots[i].isDead) dots[i].update(p5);
-      else dots.splice(i, 1);
-    }
+      dots[i].update(p5);
 
-    console.log(dots);
+      if (dots[i].isDead) dots.splice(i, 1);
+    }
   };
 
   p5.mousePressed = () => {
-    const dot = new Burst(p5.mouseX, p5.mouseY, 5, 5);
+    const dot = new Burst(p5.mouseX, p5.mouseY, 5);
     dots.push(dot);
   };
 };
