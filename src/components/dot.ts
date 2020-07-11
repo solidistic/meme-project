@@ -34,8 +34,8 @@ export class Dot {
     this.radius = Math.random() * 20;
     this.maxRadius = 60;
     this.velocity = velocity;
-    this.lifetime = lifetime;
-    this.createdAt = new Date().getSeconds();
+    this.lifetime = lifetime * 1000;
+    this.createdAt = Date.now();
     this.isDead = false;
     this.color = colors[Math.floor(Math.random() * colors.length)];
   }
@@ -76,7 +76,7 @@ export class Dot {
     this.x += this.dx;
     this.y += this.dy;
 
-    if (this.createdAt + this.lifetime === p5.second()) this.isDead = true;
+    if (this.createdAt + this.lifetime <= Date.now()) this.isDead = true;
 
     this.draw(p5);
   }

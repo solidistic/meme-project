@@ -20,15 +20,17 @@ export class Burst extends Dot {
 
     if (this.dots.length > 0)
       for (let i = 0; i < this.dots.length; i++) {
-        this.dots[i].update(p5);
+        if (this.dots[i].isDead) {
+          this.dots.splice(i, 1);
+        } else this.dots[i].update(p5);
       }
+
+    if (this.dots.length === 0 && this.hideDot) this.isDead = true;
   }
 
   burst(p5: p5): void {
     if (this.radius >= this.maxRadius && this.dots.length < 10) {
       this.dots.push(new Dot(this.x, this.y, 35, 5));
     } else if (this.dots.length === 10) this.hideDot = true;
-    // if (this.createdAt + this.lifetime === p5.second()) return true;
-    // return false;
   }
 }

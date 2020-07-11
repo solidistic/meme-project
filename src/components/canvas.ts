@@ -28,19 +28,19 @@ export const p5canvas = (p5: p5) => {
     p5.background("#353535");
     p5.ellipse(mouseX, mouseY, 30, 30);
 
-    // line.draw(p5, mouseX, mouseY);
-
     const offset = 10;
 
     for (let i = 0; i < dots.length; i++) {
-      // p5.fill(dot.color);
       const distance = dots[i].distance(p5, mouseX, mouseY);
       const onRange = distance - dots[i].radius < offset;
 
       if (onRange) dots[i].increaseRadius(p5);
-      
-      if (dots[i]) dots[i].update(p5);
+
+      if (!dots[i].isDead) dots[i].update(p5);
+      else dots.splice(i, 1);
     }
+
+    console.log(dots);
   };
 
   p5.mousePressed = () => {
